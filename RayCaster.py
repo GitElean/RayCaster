@@ -1,8 +1,8 @@
 import pygame
-
+from pygame.locals import *
 from math import cos, sin, pi
 
-RAY_AMOUNT = 100
+RAY_AMOUNT = 50
 
 wallcolors = {
     '1': pygame.Color('red'),
@@ -172,10 +172,19 @@ def updateFPS():
 
 isRunning = True
 while isRunning:
-
+    
+    draw_text('Nivel 1', font, (220, 200, 18), screen, 20, 20)   
+    
+    
     for ev in pygame.event.get():
         if ev.type == pygame.QUIT:
             isRunning = False
+            pygame.quit()
+            sys.exit()
+                
+        if ev.type == KEYDOWN:
+            if event.key == K_ESCAPE:
+                running = False
 
         elif ev.type == pygame.KEYDOWN:
             newX = rCaster.player['x']
