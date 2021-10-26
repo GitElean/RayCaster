@@ -214,7 +214,17 @@ def main_menu():
             if ev.type == MOUSEBUTTONDOWN:
                 if ev.button == 1:
                     click = True
- 
+            if ev.type == KEYDOWN:
+                if ev.key == K_UP:
+                    mx = 500
+                    my = 170
+            if ev.type == KEYDOWN:
+                if ev.key == K_DOWN:
+                    mx = 500
+                    my = 320
+            if ev.type == KEYDOWN:
+                if ev.key == K_SPACE:
+                    click = True
         pygame.display.update()
         clock.tick(60)
 
@@ -230,7 +240,7 @@ def updateFPS():
 def juego():
     isRunning = True
     while isRunning:
-        draw_text('Nivel 1', font, (255, 255, 255), screen, 520, 30)
+        
         for ev in pygame.event.get():
             if ev.type == pygame.QUIT:
                 isRunning = False
@@ -280,11 +290,15 @@ def juego():
         rCaster.render()
 
         #FPS
-        screen.fill(pygame.Color("black"), (0,0,30,30) )
+        
         screen.blit(updateFPS(), (0,0))
         clock.tick(60)
-
-
+        
+        #nivel
+        
+        draw_text('Nivel 1', font, (255, 255, 60), screen, 500, 0)
+        
+        
         pygame.display.flip()
 
 main_menu()
