@@ -186,19 +186,21 @@ def main_menu():
         mx, my = pygame.mouse.get_pos()
  
         button_1 = pygame.Rect(450, 150, 100, 75)
-        draw_text('Jugar', font, (255,255,255), screen, 370, 150)
+        draw_text('Jugar', font, (255,255,255), screen, 500, 150)
         button_2 = pygame.Rect(450, 300, 100, 75)
-        draw_text('Salir', font, (255,255,255), screen, 370, 300)
+        draw_text('Salir', font, (255,255,255), screen, 500, 300)
         if button_1.collidepoint((mx, my)):
-            react1 = pygame.Rect(455, 155, 90, 65)
+            react1 = pygame.Rect(450, 155, 180, 65)
             pygame.draw.rect(screen, (200, 200, 200), react1)
             if click:
                 juego()
         if button_2.collidepoint((mx, my)):
+            react1 = pygame.Rect(450, 300, 180, 65)
+            pygame.draw.rect(screen, (200, 200, 200), react1)
             if click:
                 exit()
-        pygame.draw.rect(screen, (30, 200, 30), button_1)
-        pygame.draw.rect(screen, (30, 200, 30), button_2)
+        
+        
  
         click = False
         for ev in pygame.event.get():
@@ -228,7 +230,7 @@ def updateFPS():
 def juego():
     isRunning = True
     while isRunning:
-
+        draw_text('Nivel 1', font, (255, 255, 255), screen, 520, 30)
         for ev in pygame.event.get():
             if ev.type == pygame.QUIT:
                 isRunning = False
