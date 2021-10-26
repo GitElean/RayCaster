@@ -1,10 +1,9 @@
 import pygame, sys
 from pygame.locals import *
 from math import cos, sin, pi
-import MainMenu as mn
 
-RAY_AMOUNT = 50
-#delta_time = clock.tick(fps)
+RAY_AMOUNT = 30
+
 wallcolors = {
     '1': pygame.Color('red'),
     '2': pygame.Color('green'),
@@ -166,27 +165,73 @@ rCaster.load_map("map2.txt")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("Arial", 25)
 
+font = pygame.font.Font("wolfenstein.ttf",40)
+fondo = pygame.image.load("fondo.jpg").convert()
+fondo = pygame.transform.scale(fondo, (1000, 500))
+ 
+def draw_text(text, font, color, surface, x, y):
+    textobj = font.render(text, (255,255,255), color)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
+ 
+click = False
+ 
+def main_menu():
+    while True:
+     
+        screen.blit (fondo, [0, 0])
+        draw_text('UVGenstein', font, (73, 150, 60), screen, 470, 20)
+ 
+        mx, my = pygame.mouse.get_pos()
+ 
+        button_1 = pygame.Rect(450, 150, 100, 75)
+        draw_text('Jugar', font, (255,255,255), screen, 370, 150)
+        button_2 = pygame.Rect(450, 300, 100, 75)
+        draw_text('Salir', font, (255,255,255), screen, 370, 300)
+        if button_1.collidepoint((mx, my)):
+            react1 = pygame.Rect(455, 155, 90, 65)
+            pygame.draw.rect(screen, (200, 200, 200), react1)
+            if click:
+                juego()
+        if button_2.collidepoint((mx, my)):
+            if click:
+                exit()
+        pygame.draw.rect(screen, (30, 200, 30), button_1)
+        pygame.draw.rect(screen, (30, 200, 30), button_2)
+ 
+        click = False
+        for ev in pygame.event.get():
+            if ev.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if ev.type == KEYDOWN:
+                if ev.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+            if ev.type == MOUSEBUTTONDOWN:
+                if ev.button == 1:
+                    click = True
+ 
+        pygame.display.update()
+        clock.tick(60)
+
+def exit():
+    pygame.quit()
+    sys.exit()
+
 def updateFPS():
     fps = str(int(clock.get_fps()))
     fps = font.render(fps, 1, pygame.Color("white"))
     return fps
 
-def level1():
+def juego():
     isRunning = True
     while isRunning:
-    
-        mn.draw_text('Nivel 1', font, (220, 200, 18), screen, 20, 20)   
-    
-    
+
         for ev in pygame.event.get():
             if ev.type == pygame.QUIT:
                 isRunning = False
-                pygame.quit()
-                sys.exit()
-                    
-            if ev.type == KEYDOWN:
-                if ev.key == K_ESCAPE:
-                    running = False
 
             elif ev.type == pygame.KEYDOWN:
                 newX = rCaster.player['x']
@@ -240,4 +285,5 @@ def level1():
 
         pygame.display.flip()
 
+main_menu()
 pygame.quit()

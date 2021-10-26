@@ -45,7 +45,7 @@ def main_menu():
         draw_text('Salir', font, (255,255,255), screen, 370, 300)
         if button_1.collidepoint((mx, my)):
             if click:
-                game()
+                rc.juego()
         if button_2.collidepoint((mx, my)):
             if click:
                 exit()
@@ -67,9 +67,6 @@ def main_menu():
  
         pygame.display.update()
         mainClock.tick(60)
- 
-def game():
-    rc.level1()
         
  
 def game_pause():
