@@ -1,3 +1,7 @@
+'''
+gui
+'''
+
 import pygame, sys
 from pygame.locals import *
 from math import cos, sin, pi
