@@ -10,7 +10,7 @@ fuentes :https://pastebin.com/XDQyDZUd
 #!/usr/bin/python3.4
 # Setup Python ----------------------------------------------- #
 import pygame, sys
-#import RayCaster as rc
+import RayCaster as rc
  
 # Setup pygame/window ---------------------------------------- #
 mainClock = pygame.time.Clock()
@@ -20,6 +20,8 @@ pygame.display.set_caption('UVGenstein')
 screen = pygame.display.set_mode((1000, 500),0,32)
  
 font = pygame.font.Font("wolfenstein.ttf",40)
+fondo = pygame.image.load("fondo.jpg").convert()
+fondo = pygame.transform.scale(fondo, (1000, 500))
  
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, (255,255,255), color)
@@ -31,16 +33,16 @@ click = False
  
 def main_menu():
     while True:
- 
-        screen.fill((0,0,0))
+     
+        screen.blit (fondo, [0, 0])
         draw_text('UVGenstein', font, (73, 150, 60), screen, 470, 20)
  
         mx, my = pygame.mouse.get_pos()
  
-        button_1 = pygame.Rect(400, 150, 300, 75)
-        draw_text('Jugar', font, 1, screen, 470, 150)
-        button_2 = pygame.Rect(400, 300, 300, 75)
-        draw_text('Salir', font, 1, screen, 470, 300)
+        button_1 = pygame.Rect(450, 150, 100, 75)
+        draw_text('Jugar', font, (255,255,255), screen, 370, 150)
+        button_2 = pygame.Rect(450, 300, 100, 75)
+        draw_text('Salir', font, (255,255,255), screen, 370, 300)
         if button_1.collidepoint((mx, my)):
             if click:
                 game()
@@ -67,21 +69,8 @@ def main_menu():
         mainClock.tick(60)
  
 def game():
-    running = True
-    while running:
-        import RayCaster
+    rc.level1()
         
-        draw_text('Nivel 1', font, (220, 200, 18), screen, 20, 20)
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    running = False
-        
-        pygame.display.update()
-        mainClock.tick(60)
  
 def game_pause():
     pass
