@@ -1,5 +1,6 @@
 '''
 gui
+fuente: https://pastebin.com/XDQyDZUd
 '''
 
 import pygame, sys
