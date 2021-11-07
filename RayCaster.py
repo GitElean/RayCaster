@@ -19,11 +19,27 @@ wallcolors = {
     }
 
 wallTextures = {
-    '1': pygame.image.load('wall1.png'),
-    '2': pygame.image.load('wall2.png'),
-    '3': pygame.image.load('wall3.png'),
-    '4': pygame.image.load('wall4.png'),
-    '5': pygame.image.load('wall5.png')
+    '1': pygame.image.load('textures/l1_w1.png'),
+    '2': pygame.image.load('textures/l1_w2.png'),
+    '3': pygame.image.load('textures/l1_w3.png'),
+    '4': pygame.image.load('textures/l1_w4.png'),
+    '5': pygame.image.load('textures/l1_w5.png')
+    }
+
+wallTextures2 = {
+    '1': pygame.image.load('textures/l2_w1.png'),
+    '2': pygame.image.load('textures/l2_w2.png'),
+    '3': pygame.image.load('textures/l2_w3.png'),
+    '4': pygame.image.load('textures/l2_w4.png'),
+    '5': pygame.image.load('textures/l2_w5.png')
+    }
+
+wallTextures3 = {
+    '1': pygame.image.load('textures/l3_w1.png'),
+    '2': pygame.image.load('textures/l3_w2.png'),
+    '3': pygame.image.load('textures/l3_w3.png'),
+    '4': pygame.image.load('textures/l3_w4.png'),
+    '5': pygame.image.load('textures/l3_w5.png')
     }
 
 enemies = [{"x" : 100,
@@ -317,36 +333,43 @@ def level_1():
                 isRunning = False
 
             elif ev.type == pygame.KEYDOWN:
-                newX = rCaster.player['x']
-                newY = rCaster.player['y']
-                forward = rCaster.player['angle'] * pi / 180
-                right = (rCaster.player['angle'] + 90) * pi / 180
+                
+                
 
                 if ev.key == pygame.K_ESCAPE:
                     isRunning = False
-                elif ev.key == pygame.K_w:
-                    newX += cos(forward) * rCaster.stepSize
-                    newY += sin(forward) * rCaster.stepSize
-                elif ev.key == pygame.K_s:
-                    newX -= cos(forward) * rCaster.stepSize
-                    newY -= sin(forward) * rCaster.stepSize
-                elif ev.key == pygame.K_a:
-                    newX -= cos(right) * rCaster.stepSize
-                    newY -= sin(right) * rCaster.stepSize
-                elif ev.key == pygame.K_d:
-                    newX += cos(right) * rCaster.stepSize
-                    newY += sin(right) * rCaster.stepSize
-                elif ev.key == pygame.K_q:
-                    rCaster.player['angle'] -= rCaster.turnSize
-                elif ev.key == pygame.K_e:
-                    rCaster.player['angle'] += rCaster.turnSize
-
+                    
                 i = int(newX/rCaster.blocksize)
                 j = int(newY/rCaster.blocksize)
 
                 if rCaster.map[j][i] == ' ':
                     rCaster.player['x'] = newX
                     rCaster.player['y'] = newY
+                    
+                    
+        newX = rCaster.player['x']
+        newY = rCaster.player['y']
+        forward = rCaster.player['angle'] * pi / 180
+        right = (rCaster.player['angle'] + 90) * pi / 180            
+        keys = pygame.key.get_pressed()         
+        if keys[K_w]:
+            newX += cos(forward) * rCaster.stepSize + 0.5
+            newY += sin(forward) * rCaster.stepSize + 0.5
+        elif keys[K_s]:
+            newX -= cos(forward) * rCaster.stepSize + 0.5
+            newY -= sin(forward) * rCaster.stepSize + 0.5
+        elif keys[K_a]:
+            newX -= cos(right) * rCaster.stepSize + 0.5
+            newY -= sin(right) * rCaster.stepSize + 0.5
+        elif keys[K_d]:
+            newX += cos(right) * rCaster.stepSize + 0.5
+            newY += sin(right) * rCaster.stepSize + 0.5
+        elif keys[K_q]:
+            rCaster.player['angle'] -= rCaster.turnSize + 0.5
+        elif keys[K_e]:
+            rCaster.player['angle'] += rCaster.turnSize + 0.5
+ 
+                
 
         # Techo
         screen.fill(pygame.Color("saddlebrown"), (0, 0,  width, int(height / 2)))
