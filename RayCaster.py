@@ -333,25 +333,15 @@ def level_1():
                 isRunning = False
 
             elif ev.type == pygame.KEYDOWN:
-                
-                
-
                 if ev.key == pygame.K_ESCAPE:
                     isRunning = False
-                    
-                i = int(newX/rCaster.blocksize)
-                j = int(newY/rCaster.blocksize)
-
-                if rCaster.map[j][i] == ' ':
-                    rCaster.player['x'] = newX
-                    rCaster.player['y'] = newY
-                    
-                    
+        
+        keys = pygame.key.get_pressed()         
         newX = rCaster.player['x']
         newY = rCaster.player['y']
         forward = rCaster.player['angle'] * pi / 180
         right = (rCaster.player['angle'] + 90) * pi / 180            
-        keys = pygame.key.get_pressed()         
+        
         if keys[K_w]:
             newX += cos(forward) * rCaster.stepSize + 0.5
             newY += sin(forward) * rCaster.stepSize + 0.5
@@ -369,7 +359,12 @@ def level_1():
         elif keys[K_e]:
             rCaster.player['angle'] += rCaster.turnSize + 0.5
  
-                
+        i = int(newX/rCaster.blocksize)
+        j = int(newY/rCaster.blocksize)
+
+        if rCaster.map[j][i] == ' ':
+            rCaster.player['x'] = newX
+            rCaster.player['y'] = newY
 
         # Techo
         screen.fill(pygame.Color("saddlebrown"), (0, 0,  width, int(height / 2)))
