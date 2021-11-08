@@ -44,15 +44,15 @@ wallTextures3 = {
 
 enemies = [{"x" : 100,
             "y" : 200,
-            "sprite" : pygame.image.load('sprite1.png')},
+            "sprite" : pygame.image.load('sprites/mob1.png')},
 
            {"x" : 350,
             "y" : 150,
-            "sprite" : pygame.image.load('sprite2.png')},
+            "sprite" : pygame.image.load('sprites/mob2.png')},
 
             {"x" : 300,
              "y" : 400,
-             "sprite" : pygame.image.load('sprite3.png')}
+             "sprite" : pygame.image.load('sprites/mob3.png')}
     ]
 
 
@@ -63,7 +63,7 @@ class Raycaster(object):
 
         self.map = []
         self.zbuffer = [float('inf') for z in range(self.width)]
-
+        self.zbuffer.sort()
         self.blocksize = 50
         self.wallheight = 50
 
@@ -238,10 +238,11 @@ class Raycaster(object):
         self.drawMinimap()
 
 
-width = 800
-height = 600
+width = 500
+height = 500
 
 pygame.init()
+
 screen = pygame.display.set_mode((width,height), pygame.DOUBLEBUF | pygame.HWACCEL | pygame.HWSURFACE )
 screen.set_alpha(None)
 
@@ -252,6 +253,12 @@ clock = pygame.time.Clock()
 font = pygame.font.Font("wolfenstein.ttf",40)
 fondo = pygame.image.load("fondo.jpg").convert()
 fondo = pygame.transform.scale(fondo, (800, 600))
+
+
+step = pygame.mixer.Sound("sounds/steps.ogg")
+
+#pygame.mixer.Sound.set_volume
+#ost2 = pygame.mixer.Sound("sounds/ost2.ogg")
 
 
 def draw_text(text, font, color, surface, x, y):
@@ -266,10 +273,12 @@ click = False
 
 def main_menu():
     while True:
-     
+        
+        
         screen.blit (fondo, [0, 0])
         draw_text('UVGenstein', font, (73, 150, 60), screen, 370, 20)
- 
+        pygame.mixer.music.load("sounds/ost3.wav")
+        pygame.mixer.music.play(-1)
         mx, my = pygame.mouse.get_pos()
  
         button_1 = pygame.Rect(350, 150, 100, 75)
@@ -327,13 +336,16 @@ def updateFPS():
 def level_1():
     isRunning = True
     while isRunning:
-
+        pygame.mixer.music.load("sounds/ost1.wav")
+        pygame.mixer.music.play(-1)
         for ev in pygame.event.get():
             if ev.type == pygame.QUIT:
+                pygame.mixer.music.stop()
                 isRunning = False
 
             elif ev.type == pygame.KEYDOWN:
                 if ev.key == pygame.K_ESCAPE:
+                    pygame.mixer.music.stop()
                     isRunning = False
         
         keys = pygame.key.get_pressed()         
@@ -345,15 +357,19 @@ def level_1():
         if keys[K_w]:
             newX += cos(forward) * rCaster.stepSize + 0.5
             newY += sin(forward) * rCaster.stepSize + 0.5
+            step.play()
         elif keys[K_s]:
             newX -= cos(forward) * rCaster.stepSize + 0.5
             newY -= sin(forward) * rCaster.stepSize + 0.5
+            step.play()
         elif keys[K_a]:
             newX -= cos(right) * rCaster.stepSize + 0.5
             newY -= sin(right) * rCaster.stepSize + 0.5
+            step.play()
         elif keys[K_d]:
             newX += cos(right) * rCaster.stepSize + 0.5
             newY += sin(right) * rCaster.stepSize + 0.5
+            step.play()
         elif keys[K_q]:
             rCaster.player['angle'] -= rCaster.turnSize + 0.5
         elif keys[K_e]:
