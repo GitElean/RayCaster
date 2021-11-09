@@ -10,6 +10,8 @@ from pygame import mixer
 RAY_AMOUNT = 150
 SPRITE_BACKGROUND = (152, 0, 136, 255)
 
+
+
 wallcolors = {
     '1': pygame.Color('red'),
     '2': pygame.Color('green'),
@@ -42,18 +44,7 @@ wallTextures3 = {
     '5': pygame.image.load('textures/l3_w5.png')
     }
 
-enemies = [{"x" : 100,
-            "y" : 200,
-            "sprite" : pygame.image.load('sprites/mob1.png')},
 
-           {"x" : 350,
-            "y" : 150,
-            "sprite" : pygame.image.load('sprites/mob2.png')},
-
-            {"x" : 300,
-             "y" : 400,
-             "sprite" : pygame.image.load('sprites/mob3.png')}
-    ]
 
 
 class Raycaster(object):
@@ -237,17 +228,29 @@ class Raycaster(object):
 
         self.drawMinimap()
 
-
+pygame.init()
 width = 500
 height = 500
-
-pygame.init()
 
 screen = pygame.display.set_mode((width,height), pygame.DOUBLEBUF | pygame.HWACCEL | pygame.HWSURFACE )
 screen.set_alpha(None)
 
 rCaster = Raycaster(screen)
 rCaster.load_map("map2.txt")
+
+enemies = [{"x" : 100,
+            "y" : 200,
+            "sprite" : pygame.image.load('sprites/mob1.png').convert()},
+
+           {"x" : 350,
+            "y" : 150,
+            "sprite" : pygame.image.load('sprites/mob2.png').convert()},
+
+            {"x" : 300,
+             "y" : 400,
+             "sprite" : pygame.image.load('sprites/mob3.png').convert()}
+    ]
+
 
 clock = pygame.time.Clock()
 font = pygame.font.Font("wolfenstein.ttf",40)
