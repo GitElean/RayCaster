@@ -6,7 +6,7 @@ fuente: https://pastebin.com/XDQyDZUd
 import pygame, sys
 from pygame.locals import *
 from math import cos, sin, pi, atan2
-
+from pygame import mixer
 RAY_AMOUNT = 150
 SPRITE_BACKGROUND = (152, 0, 136, 255)
 
@@ -212,7 +212,7 @@ class Raycaster(object):
 
             for i in range(rayWidth):
                 self.zbuffer[column * rayWidth + i] = dist
-
+                self.zbuffer.sort()
             startX = int(( (column / RAY_AMOUNT) * self.width))
 
             # perceivedHeight = screenHeight / (distance * cos( rayAngle - viewAngle)) * wallHeight
@@ -252,13 +252,12 @@ rCaster.load_map("map2.txt")
 clock = pygame.time.Clock()
 font = pygame.font.Font("wolfenstein.ttf",40)
 fondo = pygame.image.load("fondo.jpg").convert()
-fondo = pygame.transform.scale(fondo, (800, 600))
+fondo = pygame.transform.scale(fondo, (500, 500))
 
 
-step = pygame.mixer.Sound("sounds/steps.ogg")
+step = mixer.Sound("sounds/steps.ogg")
 step.set_volume(0.5)
 #ost2 = pygame.mixer.Sound("sounds/ost2.ogg")
-
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, (255,255,255), color)
@@ -271,26 +270,29 @@ click = False
 
 
 def main_menu():
+    mixer.music.load("sounds/ost3.wav")
+    mixer.music.set_volume(.5)
+    mixer.music.play(-1)
     while True:
         
         
         screen.blit (fondo, [0, 0])
-        draw_text('UVGenstein', font, (73, 150, 60), screen, 370, 20)
-        pygame.mixer.music.load("sounds/ost3.wav")
-        pygame.mixer.music.play(-1)
+        draw_text('UVGenstein', font, (73, 150, 60), screen, 200, 20)
+        
         mx, my = pygame.mouse.get_pos()
  
-        button_1 = pygame.Rect(350, 150, 100, 75)
-        draw_text('Jugar', font, (255,255,255), screen, 400, 150)
-        button_2 = pygame.Rect(350, 300, 100, 75)
-        draw_text('Salir', font, (255,255,255), screen, 400, 300)
+        button_1 = pygame.Rect(150, 150, 100, 75)
+        draw_text('Jugar', font, (255,255,255), screen, 200, 150)
+        button_2 = pygame.Rect(150, 300, 100, 75)
+        draw_text('Salir', font, (255,255,255), screen, 200, 300)
         if button_1.collidepoint((mx, my)):
-            react1 = pygame.Rect(350, 155, 180, 65)
+            react1 = pygame.Rect(150, 155, 180, 65)
             pygame.draw.rect(screen, (200, 200, 200), react1)
             if click:
                 level_1()
+                #mixer.music.stop()
         if button_2.collidepoint((mx, my)):
-            react1 = pygame.Rect(350, 300, 180, 65)
+            react1 = pygame.Rect(150, 300, 180, 65)
             pygame.draw.rect(screen, (200, 200, 200), react1)
             if click:
                 exit()
@@ -335,8 +337,9 @@ def updateFPS():
 def level_1():
     isRunning = True
     while isRunning:
-        pygame.mixer.music.load("sounds/ost1.wav")
-        pygame.mixer.music.play(-1)
+        mixer.music.load("sounds/ost1.wav")
+        mixer.music.set_volume(0.5)
+        mixer.music.play(-1)
         for ev in pygame.event.get():
             if ev.type == pygame.QUIT:
                 pygame.mixer.music.stop()
