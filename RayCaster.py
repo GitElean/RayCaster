@@ -256,8 +256,7 @@ fondo = pygame.transform.scale(fondo, (800, 600))
 
 
 step = pygame.mixer.Sound("sounds/steps.ogg")
-
-#pygame.mixer.Sound.set_volume
+step.set_volume(0.5)
 #ost2 = pygame.mixer.Sound("sounds/ost2.ogg")
 
 
